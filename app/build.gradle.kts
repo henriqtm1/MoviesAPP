@@ -35,7 +35,7 @@ android {
                 "proguard-rules.pro"
             )
 
-            //TODO API PRO TESTE IFOOD: DEV E PROD IGUAL A URL
+            //todo Deixei igual o endereço da api, mas deixei pré configurado pra sempre utilizar debug para dev e release pra prod
             buildConfigField(
                 "String",
                 "API_MOVIES",
@@ -50,7 +50,7 @@ android {
                 "proguard-rules.pro"
             )
 
-            //TODO API PRO TESTE IFOOD: DEV E PROD IGUAL A URL
+            //todo Deixei igual o endereço da api, mas deixei pré configurado pra sempre utilizar debug para dev e release pra prod
             buildConfigField(
                 "String",
                 "API_MOVIES",
@@ -124,4 +124,8 @@ dependencies {
     // kotlin based dependency injection koin
     implementation ("io.insert-koin:koin-core:3.3.2")
     implementation ("io.insert-koin:koin-android:3.3.2")
+
+    // curl
+    implementation ("com.github.mrmike:ok2curl:0.8.0")
+
 }

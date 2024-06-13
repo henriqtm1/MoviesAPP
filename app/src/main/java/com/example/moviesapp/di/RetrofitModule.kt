@@ -1,7 +1,10 @@
 package com.example.moviesapp.di
 
+import android.util.Log
 import com.example.moviesapp.BuildConfig
 import com.google.gson.GsonBuilder
+import com.moczul.ok2curl.CurlInterceptor
+import com.moczul.ok2curl.logger.Logger
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -19,7 +22,8 @@ private const val READ_TIMEOUT = 15L
 private const val ACCEPT = "Accept"
 private const val CONTENT_TYPE_JSON = "application/json"
 private const val AUTHORIZATION = "Authorization"
-private const val TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMmVjNjM0NzY4MWYwZWJjMDY1M2I3NTQ2YWY4MTNjMCIsInN1YiI6IjYyMThjZGQ3MGU1OTdiMDAxYjllNWRmZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5T_bXpluLPKhEcT7lRVGZ1LRvk3mejaJ3aG1VSq9TWM"
+private const val TOKEN =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMmVjNjM0NzY4MWYwZWJjMDY1M2I3NTQ2YWY4MTNjMCIsInN1YiI6IjYyMThjZGQ3MGU1OTdiMDAxYjllNWRmZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5T_bXpluLPKhEcT7lRVGZ1LRvk3mejaJ3aG1VSq9TWM"
 
 val RetrofitModule = module {
     single { Cache(androidApplication().cacheDir, 10L * 1024 * 1024) }
@@ -59,5 +63,14 @@ private fun retrofitHttpClient(cache: Cache, interceptor: Interceptor): OkHttpCl
         addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
+        addInterceptor(
+            CurlInterceptor(
+                object : Logger {
+                    override fun log(message: String) {
+                        Log.v("CURL_MoviesApp", message)
+                    }
+                }
+            )
+        )
     }.build()
 }
