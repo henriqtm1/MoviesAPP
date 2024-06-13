@@ -9,17 +9,17 @@ import com.example.moviesapp.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
-    private lateinit var navController: NavController
+    private lateinit var mBinding: ActivityHomeBinding
+    private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        mBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mobile_navigation)
                     as NavHostFragment
-        navController = navHostFragment.navController
+        mNavController = navHostFragment.navController
     }
 }

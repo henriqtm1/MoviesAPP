@@ -5,23 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.moviesapp.R
+import com.example.moviesapp.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val mHomeViewModel: HomeViewModel by viewModel()
+    private lateinit var mBinding: FragmentHomeBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel.vmGetMovies(false, false, Locale.getDefault().language,1)
-
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        val lRoot = mBinding.root
+        mHomeViewModel.vmGetMovies(false, false, Locale.getDefault().language,1)
+        return lRoot
     }
 
     fun fetchHomeViewModel(): HomeViewModel {
-        return homeViewModel
+        return mHomeViewModel
     }
 }

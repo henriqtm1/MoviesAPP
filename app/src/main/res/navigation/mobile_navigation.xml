@@ -10,6 +10,15 @@
         android:id="@+id/nav_home"
         android:name="com.example.moviesapp.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_details"
+            app:destination="@id/nav_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_details"
+        android:name="com.example.moviesapp.ui.details.DetailsFragment"
+        tools:layout="@layout/fragment_details" >
     </fragment>
 
 </navigation>

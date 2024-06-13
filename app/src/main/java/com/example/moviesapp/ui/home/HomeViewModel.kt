@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val MoviesRepository: MoviesRepository
+class HomeViewModel(private val aMoviesRepository: MoviesRepository
 ) : ViewModel() {
 
     val mMoviesList = MutableLiveData<MoviesBaseResponse>()
@@ -21,7 +21,7 @@ class HomeViewModel(private val MoviesRepository: MoviesRepository
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    mMoviesList.postValue(MoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage))
+                    mMoviesList.postValue(aMoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage))
                 } catch (e: Exception) {
                     mErrorMessage.postValue(e.message)
                 }

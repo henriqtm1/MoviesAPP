@@ -44,11 +44,11 @@ private fun provideInterceptor(): Interceptor {
     }
 }
 
-private fun retrofitBuilder(baseUrl: String, client: OkHttpClient): Retrofit {
+private fun retrofitBuilder(aBaseUrl: String, aClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(aBaseUrl)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
+        .client(aClient)
         .build()
 }
 
