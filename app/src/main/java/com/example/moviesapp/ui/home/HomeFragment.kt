@@ -10,15 +10,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-    private val HomeViewModel: HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        HomeViewModel.vmGetMovies(false, false, Locale.getDefault().language,1)
+        homeViewModel.vmGetMovies(false, false, Locale.getDefault().language,1)
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    fun fetchHomeViewModel(): HomeViewModel {
+        return homeViewModel
+    }
 }

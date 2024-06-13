@@ -2,6 +2,7 @@
 package com.example.moviesapp.ui.home
 
 import androidx.lifecycle.*
+import com.example.moviesapp.api.models.movies.MoviesBaseResponse
 import com.example.moviesapp.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,12 +10,9 @@ import kotlinx.coroutines.withContext
 
 class HomeViewModel(private val MoviesRepository: MoviesRepository
 ) : ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-  //  val mAdress = MutableLiveData<AddressBaseResponse>()
 
-    val errorMessage = MutableLiveData<String>()
+    val mMoviesList = MutableLiveData<MoviesBaseResponse>()
+    val mErrorMessage = MutableLiveData<String>()
 
     fun vmGetMovies( aIncludeAdult: Boolean,
                      aIncludeVideo: Boolean,
@@ -23,10 +21,9 @@ class HomeViewModel(private val MoviesRepository: MoviesRepository
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    MoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage)
+                    mMoviesList.postValue(MoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage))
                 } catch (e: Exception) {
-
-
+                    mErrorMessage.postValue(e.message)
                 }
             }
         }

@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class HomeViewModelUnitTest {
+class HomeViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
