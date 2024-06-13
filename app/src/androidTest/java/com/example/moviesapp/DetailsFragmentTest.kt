@@ -13,9 +13,9 @@ class DetailsFragmentTest : KoinTest {
 
     @Test
     fun fragment_is_not_null() {
-        val scenario = launchFragmentInContainer<DetailsFragment>()
-        scenario.onFragment { fragment ->
-            assertNotNull(fragment)
+        val lScenario = launchFragmentInContainer<DetailsFragment>()
+        lScenario.onFragment { aFragment ->
+            assertNotNull(aFragment)
         }
     }
 }

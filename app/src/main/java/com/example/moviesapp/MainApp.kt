@@ -11,7 +11,7 @@ import org.koin.core.context.startKoin
 
 class MainApp : Application() {
     companion object {
-        lateinit var instance: MainApp
+        lateinit var INSTANCE: MainApp
             private set
     }
     override fun onCreate() {
@@ -27,6 +27,6 @@ class MainApp : Application() {
             ))
 
         }
-        instance = this
+        INSTANCE = this
     }
 }

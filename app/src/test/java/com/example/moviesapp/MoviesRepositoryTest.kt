@@ -19,17 +19,17 @@ import kotlin.test.assertEquals
 class MoviesRepositoryTest {
 
     @Mock
-    private lateinit var moviesServices: MoviesServices
-    private lateinit var moviesRepository: MoviesRepository
+    private lateinit var mMoviesServices: MoviesServices
+    private lateinit var mMoviesRepository: MoviesRepository
 
     @Before
     fun setUp() {
-        moviesRepository = MoviesRepository(moviesServices)
+        mMoviesRepository = MoviesRepository(mMoviesServices)
     }
 
     @Test
     fun `repoGetMovies calls getMovies service`() = runTest {
-        val mockResults = listOf(
+        val lMockResults = listOf(
             Result(
                 adult = false,
                 backdrop_path = "/path.jpg",
@@ -47,19 +47,34 @@ class MoviesRepositoryTest {
                 vote_count = 1000
             )
         )
-        val mockResponse = MoviesBaseResponse(
+        val lMockResponse = MoviesBaseResponse(
             page = 1,
-            results = mockResults,
+            results = lMockResults,
             total_pages = 10,
             total_results = 100
         )
 
-        `when`(moviesServices.getMovies(false, false, "en", 1)).thenReturn(mockResponse)
+        `when`(mMoviesServices.getMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )).thenReturn(lMockResponse)
 
-        val result = moviesRepository.repoGetMovies(false, false, "en", 1)
+        val lResult = mMoviesRepository.repoGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )
 
-        verify(moviesServices).getMovies(false, false, "en", 1)
+        verify(mMoviesServices).getMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )
 
-        assertEquals(mockResponse, result)
+        assertEquals(lMockResponse, lResult)
     }
 }

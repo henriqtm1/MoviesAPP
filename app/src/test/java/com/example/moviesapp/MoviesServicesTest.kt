@@ -17,51 +17,56 @@ import kotlin.test.assertEquals
 
 class MoviesServicesTest {
 
-    private lateinit var mockWebServer: MockWebServer
-    private lateinit var moviesServices: MoviesServices
+    private lateinit var mMockWebServer: MockWebServer
+    private lateinit var mMoviesServices: MoviesServices
 
     @Before
     fun setUp() {
-        mockWebServer = MockWebServer()
-        mockWebServer.start()
+        mMockWebServer = MockWebServer()
+        mMockWebServer.start()
 
-        val logging = HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
-        val client = OkHttpClient.Builder().addInterceptor(logging).build()
+        val lLogging = HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
+        val lClient = OkHttpClient.Builder().addInterceptor(lLogging).build()
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(mockWebServer.url("/"))
-            .client(client)
+        val lRetrofit = Retrofit.Builder()
+            .baseUrl(mMockWebServer.url("/"))
+            .client(lClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        moviesServices = retrofit.create(MoviesServices::class.java)
+        mMoviesServices = lRetrofit.create(MoviesServices::class.java)
     }
 
     @After
     fun tearDown() {
-        mockWebServer.shutdown()
+        mMockWebServer.shutdown()
     }
 
     @Test
     fun `getMovies returns expected data`() {
-        val mockResponse = MoviesBaseResponse(
+        val lMockResponse = MoviesBaseResponse(
             page = 1,
             results = listOf(),
             total_pages = 1,
             total_results = 1
         )
-        val responseJson = Gson().toJson(mockResponse)
+        val lResponseJson = Gson().toJson(lMockResponse)
 
-        mockWebServer.enqueue(
+        mMockWebServer.enqueue(
             MockResponse()
-                .setBody(responseJson)
+                .setBody(lResponseJson)
                 .addHeader("Content-Type", "application/json")
         )
 
         runBlocking {
-            val response = moviesServices.getMovies(false, false, "en", 1)
+            val lResponse = mMoviesServices.getMovies(
+                aIncludeAdult = false,
+                aIncludeVideo = false,
+                aLanguage = "en",
+                aPage = 1
+            )
 
-            assertEquals(mockResponse, response)
+            assertEquals(lMockResponse, lResponse)
         }
     }
 }

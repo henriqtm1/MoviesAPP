@@ -12,9 +12,9 @@ class MainActivityTest {
 
     @Test
     fun activity_is_not_null() {
-        val scenario = ActivityScenario.launch(MainActivity::class.java)
-        scenario.onActivity { activity ->
-            assertNotNull(activity)
+        val lScenario = ActivityScenario.launch(MainActivity::class.java)
+        lScenario.onActivity { aActivity ->
+            assertNotNull(aActivity)
         }
     }
 }

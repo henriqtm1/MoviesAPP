@@ -13,26 +13,31 @@ class HomeFragmentTest : KoinTest {
 
     @Test
     fun fragment_is_not_null() {
-        val scenario = launchFragmentInContainer<HomeFragment>()
-        scenario.onFragment { fragment ->
-            assertNotNull(fragment)
+        val lScenario = launchFragmentInContainer<HomeFragment>()
+        lScenario.onFragment { aFragment ->
+            assertNotNull(aFragment)
         }
     }
 
     @Test
     fun viewModel_is_initialized() {
-        val scenario = launchFragmentInContainer<HomeFragment>()
-        scenario.onFragment { fragment ->
-            assertNotNull(fragment.fetchHomeViewModel())
+        val lScenario = launchFragmentInContainer<HomeFragment>()
+        lScenario.onFragment { aFragment ->
+            assertNotNull(aFragment.fetchHomeViewModel())
         }
     }
 
     @Test
     fun viewModel_vmGetMovies_called() {
         val scenario = launchFragmentInContainer<HomeFragment>()
-        scenario.onFragment { fragment ->
-            val viewModel = fragment.fetchHomeViewModel()
-            viewModel.vmGetMovies(false, false, "en", 1)
+        scenario.onFragment { aFragment ->
+            val lViewmodel = aFragment.fetchHomeViewModel()
+            lViewmodel.vmGetMovies(
+                aIncludeAdult = false,
+                aIncludeVideo = false,
+                aLanguage = "en",
+                aPage = 1
+            )
         }
     }
 }

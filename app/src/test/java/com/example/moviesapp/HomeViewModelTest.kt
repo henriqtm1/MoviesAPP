@@ -16,17 +16,17 @@ import org.mockito.junit.MockitoJUnitRunner
 class HomeViewModelTest {
 
     @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+    val mInstantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var moviesRepository: MoviesRepository
+    private lateinit var mMoviesRepository: MoviesRepository
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mHomeViewModel: HomeViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        homeViewModel = HomeViewModel(moviesRepository)
+        mHomeViewModel = HomeViewModel(mMoviesRepository)
     }
 
     @After
@@ -36,17 +36,37 @@ class HomeViewModelTest {
 
     @Test
     fun `vmGetMovies calls repoGetMovies`() = runTest {
-        homeViewModel.vmGetMovies(false, false, "en", 1)
+        mHomeViewModel.vmGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )
 
-        Mockito.verify(moviesRepository).repoGetMovies(false, false, "en", 1)
+        Mockito.verify(mMoviesRepository).repoGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )
     }
 
     @Test
     fun `vmGetMovies handles exception`() = runTest {
-        Mockito.`when`(moviesRepository.repoGetMovies(false, false, "en", 1))
+        Mockito.`when`(mMoviesRepository.repoGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        ))
             .thenThrow(RuntimeException("Test exception"))
 
-        homeViewModel.vmGetMovies(false, false, "en", 1)
+        mHomeViewModel.vmGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = "en",
+            aPage = 1
+        )
 
        }
 }

@@ -35,12 +35,12 @@ val RetrofitModule = module {
 
 private fun provideInterceptor(): Interceptor {
     return Interceptor { chain ->
-        val request = chain.request().newBuilder().apply {
+        val lRequest = chain.request().newBuilder().apply {
             addHeader(AUTHORIZATION, TOKEN)
             addHeader(ACCEPT, CONTENT_TYPE_JSON)
             addHeader("Content-Type", CONTENT_TYPE_JSON)
         }.build()
-        chain.proceed(request)
+        chain.proceed(lRequest)
     }
 }
 
@@ -52,22 +52,22 @@ private fun retrofitBuilder(aBaseUrl: String, aClient: OkHttpClient): Retrofit {
         .build()
 }
 
-private fun retrofitHttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
+private fun retrofitHttpClient(aCache: Cache, aInterceptor: Interceptor): OkHttpClient {
     return OkHttpClient.Builder().apply {
-        cache(cache)
+        cache(aCache)
         connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
         readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
         retryOnConnectionFailure(true)
-        addInterceptor(interceptor)
+        addInterceptor(aInterceptor)
         addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
         addInterceptor(
             CurlInterceptor(
                 object : Logger {
-                    override fun log(message: String) {
-                        Log.v("CURL_MoviesApp", message)
+                    override fun log(aMessage: String) {
+                        Log.v("CURL_MoviesApp", aMessage)
                     }
                 }
             )

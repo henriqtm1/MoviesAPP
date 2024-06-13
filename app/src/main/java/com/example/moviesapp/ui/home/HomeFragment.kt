@@ -20,7 +20,12 @@ class HomeFragment : Fragment() {
     ): View {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
         val lRoot = mBinding.root
-        mHomeViewModel.vmGetMovies(false, false, Locale.getDefault().language,1)
+        mHomeViewModel.vmGetMovies(
+            aIncludeAdult = false,
+            aIncludeVideo = false,
+            aLanguage = Locale.getDefault().language,
+            aPage = 1
+        )
         return lRoot
     }
 

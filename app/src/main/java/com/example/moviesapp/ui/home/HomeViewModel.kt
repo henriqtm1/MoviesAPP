@@ -11,8 +11,8 @@ import kotlinx.coroutines.withContext
 class HomeViewModel(private val aMoviesRepository: MoviesRepository
 ) : ViewModel() {
 
-    val mMoviesList = MutableLiveData<MoviesBaseResponse>()
-    val mErrorMessage = MutableLiveData<String>()
+    private val mMoviesList = MutableLiveData<MoviesBaseResponse>()
+    private val mErrorMessage = MutableLiveData<String>()
 
     fun vmGetMovies( aIncludeAdult: Boolean,
                      aIncludeVideo: Boolean,
@@ -22,8 +22,8 @@ class HomeViewModel(private val aMoviesRepository: MoviesRepository
             withContext(Dispatchers.IO) {
                 try {
                     mMoviesList.postValue(aMoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage))
-                } catch (e: Exception) {
-                    mErrorMessage.postValue(e.message)
+                } catch (aException: Exception) {
+                    mErrorMessage.postValue(aException.message)
                 }
             }
         }
