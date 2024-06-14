@@ -1,10 +1,20 @@
 <resources>
-    <string name="app_name">MoviesAPP</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name" translatable="false">MoviesAPP</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Main Activity -->
+    <string name="txt_new_movies">Discover the new movies showing</string>
+    <string name="txt_the_best_movies">Here you will find which films are showing in cinemas, we will update the list of what\'s new in cinemas daily.</string>
+    <string name="txt_verify_movies_catalog">Check movies</string>
+
+    <!-- Home Fragment -->
+    <string name="txt_movie_catalog">Films in theaters</string>
+
+    <!-- Detail Fragment -->
+    <string name="txt_name_movie_example">Movie name</string>
+    <string name="txt_description">Description</string>
+
+    <!-- Item Movie -->
+    <string name="txt_name_movie" translatable="false">UP</string>
+    <string name="txt_number_rating" translatable="false">8.6</string>
+    <string name="txt_empty_description">This movie has no description.</string>
 </resources>

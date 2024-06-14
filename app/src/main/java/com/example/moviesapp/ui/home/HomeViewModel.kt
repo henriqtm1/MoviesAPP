@@ -8,22 +8,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val aMoviesRepository: MoviesRepository
-) : ViewModel() {
+class HomeViewModel(private val aMoviesRepository: MoviesRepository) : ViewModel() {
 
-    private val mMoviesList = MutableLiveData<MoviesBaseResponse>()
-    private val mErrorMessage = MutableLiveData<String>()
+    private val _moviesList = MutableLiveData<MoviesBaseResponse>()
+    val mMovies: LiveData<MoviesBaseResponse> get() = _moviesList
 
-    fun vmGetMovies( aIncludeAdult: Boolean,
-                     aIncludeVideo: Boolean,
-                     aLanguage: String,
-                     aPage: Int) {
+    private val _errorMessage = MutableLiveData<String>()
+    val mErrorMessage: LiveData<String> get() = _errorMessage
+
+    fun vmGetMovies(aIncludeAdult: Boolean, aIncludeVideo: Boolean, aLanguage: String, aPage: Int) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    mMoviesList.postValue(aMoviesRepository.repoGetMovies(aIncludeAdult,aIncludeVideo,aLanguage, aPage))
+                    _moviesList.postValue(aMoviesRepository.repoGetMovies(aIncludeAdult, aIncludeVideo, aLanguage, aPage))
                 } catch (aException: Exception) {
-                    mErrorMessage.postValue(aException.message)
+                    _errorMessage.postValue(aException.message)
                 }
             }
         }

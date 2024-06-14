@@ -128,4 +128,6 @@ dependencies {
     implementation ("io.insert-koin:koin-android:$koin_version")
     // curl
     implementation ("com.github.mrmike:ok2curl:0.8.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
 }

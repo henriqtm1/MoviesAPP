@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- Main Activity -->
+    <string name="txt_new_movies">Descubra os novos filmes em cartaz</string>
+    <string name="txt_the_best_movies">Aqui você vai encontrar os filmes que estão em cartaz nos cinemas, faremos uma atualização diária da lista de novidades.</string>
+    <string name="txt_verify_movies_catalog">Verificar filmes</string>
+
+    <!-- Home Fragment -->
+    <string name="txt_movie_catalog">Filmes em cartaz</string>
+    <string name="txt_description">Descrição</string>
+
+    <!-- Detail Fragment -->
+    <string name="txt_name_movie_example">Nome filme</string>
+    <string name="txt_empty_description">Este filme não possui descrição.</string>
+</resources>

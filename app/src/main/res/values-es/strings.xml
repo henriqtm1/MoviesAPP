@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- Actividad principal -->
+    <string name="txt_new_movies">Descubre las nuevas películas que se proyectan</string>
+    <string name="txt_the_best_movies">Aquí encontrarás las películas que se proyectan actualmente en los cines, actualizaremos la lista de nuevos estrenos diariamente.</string>
+    <string name="txt_verify_movies_catalog">Películas que se muestran</string>
+
+    <!-- Fragmento de inicio -->
+    <string name="txt_movie_catalog">Películas en cines</string>
+    <string name="txt_description">Descripción</string>
+
+    <!-- Fragmento de detalle -->
+    <string name="txt_name_movie_example">Nombre de la película</string>
+    <string name="txt_empty_description">Esta película no tiene descripción.</string>
+
+</resources>

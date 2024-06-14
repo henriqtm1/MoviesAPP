@@ -19,6 +19,18 @@
         android:id="@+id/nav_details"
         android:name="com.example.moviesapp.ui.details.DetailsFragment"
         tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="image"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="rating"
+            app:argType="float" />
+        <argument
+            android:name="desc"
+            app:argType="string" />
     </fragment>
 
 </navigation>

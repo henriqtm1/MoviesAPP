@@ -20,6 +20,7 @@ private const val CONNECT_TIMEOUT = 15L
 private const val WRITE_TIMEOUT = 15L
 private const val READ_TIMEOUT = 15L
 private const val ACCEPT = "Accept"
+private const val CURL_MOVIESAPP = "CURL_MoviesApp"
 private const val CONTENT_TYPE_JSON = "application/json"
 private const val AUTHORIZATION = "Authorization"
 private const val TOKEN =
@@ -38,7 +39,6 @@ private fun provideInterceptor(): Interceptor {
         val lRequest = chain.request().newBuilder().apply {
             addHeader(AUTHORIZATION, TOKEN)
             addHeader(ACCEPT, CONTENT_TYPE_JSON)
-            addHeader("Content-Type", CONTENT_TYPE_JSON)
         }.build()
         chain.proceed(lRequest)
     }
@@ -66,8 +66,8 @@ private fun retrofitHttpClient(aCache: Cache, aInterceptor: Interceptor): OkHttp
         addInterceptor(
             CurlInterceptor(
                 object : Logger {
-                    override fun log(aMessage: String) {
-                        Log.v("CURL_MoviesApp", aMessage)
+                    override fun log(message: String) {
+                        Log.v(CURL_MOVIESAPP, message)
                     }
                 }
             )
