@@ -13,10 +13,10 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_28"
             android:background="@drawable/background_details"
             android:padding="@dimen/dp_10"
             android:src="@drawable/ic_back"

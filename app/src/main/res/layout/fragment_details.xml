@@ -13,10 +13,10 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_28"
             android:background="@drawable/background_details"
             android:padding="@dimen/dp_10"
             android:src="@drawable/ic_back"
@@ -49,9 +49,9 @@
 
         <ImageView
             android:id="@+id/img_Start"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="@dimen/dp_11"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_4"
             android:src="@drawable/ic_star"
             app:layout_constraintEnd_toStartOf="@+id/txt_movieRating"
@@ -62,10 +62,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_44"
-            android:layout_marginTop="@dimen/dp_13"
+            android:layout_marginTop="@dimen/dp_20"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/yellow"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_movie"
             tools:text="@string/txt_number_rating" />
