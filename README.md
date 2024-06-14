@@ -13,13 +13,13 @@
 <div align="center">
   
 <!-- Imagem 1 -->
-<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/d3380221-aeed-49be-8bdd-d1eb56bb3a93" alt="foto1" width="200" />
+<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/ceac84e1-e9fa-4239-a695-3d3a898c7900" alt="foto1" width="220" />
 
 <!-- Imagem 2 -->
-<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/969242c0-418b-4a07-bea9-9b990c8619ce" alt="foto2" width="200" />
+<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/e83922fd-4704-422f-b48d-0e7c818852b4" alt="foto2" width="220" />
 
 <!-- Imagem 3 -->
-<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/c3b6e6be-40e0-4fac-9901-8b3c46c8b031" alt="foto3" width="200" />
+<img src="https://github.com/henriqtm1/MoviesAPP/assets/69311308/ffd97145-1adc-42b2-8690-c4f52ae04a4d" alt="foto3" width="220" />
 </div>
 
 ---
