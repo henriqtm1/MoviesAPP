@@ -40,11 +40,13 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - Arquitetura MVVM
 - Testes unitários
 - Corountines
+- Clean Code
 - Retrofit
 - Glide
 - Lifecycle
-- Navigation Fragment
+- Navigation Component
 - Recycler View
+- ViewBinding
 ---
 
 OBS: O projeto foi configurado com a base url mocada no build gradle, pois se fosse o caso de possuir uma url pra dev e uma pra prod fiz a configuração para alternar no projeto quando estiver na build variant desta forma (release -> pega url de prod) e (debug -> pega url de dev), mas como são iguais utilizam a mesma url em ambas.
