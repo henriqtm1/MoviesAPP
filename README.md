@@ -51,5 +51,7 @@ OBS: O projeto foi configurado com a base url mocada no build gradle, pois se fo
 
 Configurei também uma sigla de url na apiModule, para quando tiver um projeto com mais de uma url pra consumir basta utilizar a sigla para escolher qual url o service irá utilizar.
 
+O aplicativo possui internacionalização para inglês, espanhol e português.
+
 --- 
 Desenvolvido por Henrique Marinho Teixeira.
