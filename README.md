@@ -2,10 +2,9 @@
 
 ## 📋 Índice
 
+- [Preview](#-Preview)
 - [Sobre](#-Sobre)
 - [Tecnologias utilizadas](#-Tecnologias-utilizadas)
-- [Preview](#-Preview)
-- [Considerações adicionais](#-Considerações-adicionais)
 
 ---
 
