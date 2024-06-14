@@ -5,7 +5,7 @@
 - [Sobre](#-Sobre)
 - [Tecnologias utilizadas](#-Tecnologias-utilizadas)
 - [Preview](#-Preview)
-- [Considerações adicionais](#-Considerações_adicionais)
+- [Considerações adicionais](#-Considerações-adicionais)
 
 ---
 
