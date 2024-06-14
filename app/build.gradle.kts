@@ -74,12 +74,12 @@ android {
 }
 
 dependencies {
-    var retrofit_version = "2.9.0"
-    var mockito_version = "4.0.0"
-    var koin_version = "3.1.2"
-    var lifecyle_version = "2.8.2"
-    var navigation_version = "2.7.7"
-    var http_version = "4.10.0"
+    val retrofit_version = "2.9.0"
+    val mockito_version = "4.0.0"
+    val koin_version = "3.1.2"
+    val lifecyle_version = "2.8.2"
+    val navigation_version = "2.7.7"
+    val http_version = "4.10.0"
 
     // JUnit
     testImplementation("junit:junit:4.13.2")
