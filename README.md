@@ -5,6 +5,7 @@
 - [Sobre](#-Sobre)
 - [Tecnologias utilizadas](#-Tecnologias-utilizadas)
 - [Preview](#-Preview)
+- [Considerações adicionais](#-Considerações_adicionais)
 
 ---
 
@@ -49,7 +50,8 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - ViewBinding
 ---
 
-OBS: O projeto foi configurado com a base url mocada no build gradle, pois se fosse o caso de possuir uma url pra dev e uma pra prod fiz a configuração para alternar no projeto quando estiver na build variant desta forma (release -> pega url de prod) e (debug -> pega url de dev), mas como são iguais utilizam a mesma url em ambas.
+## Considerações adicionais
+O projeto foi configurado com a base url mocada no build gradle, pois se fosse o caso de possuir uma url pra dev e uma pra prod fiz a configuração para alternar no projeto quando estiver na build variant desta forma (release -> pega url de prod) e (debug -> pega url de dev), mas como são iguais utilizam a mesma url em ambas.
 
 Configurei também uma sigla de url na apiModule, para quando tiver um projeto com mais de uma url pra consumir basta utilizar a sigla para escolher qual url o service irá utilizar.
 
