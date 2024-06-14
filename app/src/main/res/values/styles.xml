@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/purple_light</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
@@ -7,11 +8,11 @@
         <item name="android:statusBarColor">@color/background_screen</item>
     </style>
 
-    <style name="colorWhite" >
+    <style name="colorWhite">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="buttonPurple" >
+    <style name="buttonPurple">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/sp_15</item>
     </style>

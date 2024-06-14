@@ -18,8 +18,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.mobile_navigation)
-                    as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.mobile_navigation) as NavHostFragment
         mNavController = navHostFragment.navController
     }
 }

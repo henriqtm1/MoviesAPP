@@ -17,10 +17,10 @@
             android:layout_height="50dp"
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_24"
-            android:padding="@dimen/dp_10"
-            android:translationZ="@dimen/cardview_default_elevation"
             android:background="@drawable/background_details"
+            android:padding="@dimen/dp_10"
             android:src="@drawable/ic_back"
+            android:translationZ="@dimen/cardview_default_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

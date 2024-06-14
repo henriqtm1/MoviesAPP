@@ -25,7 +25,8 @@ class MoviesServicesTest {
         mMockWebServer = MockWebServer()
         mMockWebServer.start()
 
-        val lLogging = HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
+        val lLogging =
+            HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
         val lClient = OkHttpClient.Builder().addInterceptor(lLogging).build()
 
         val lRetrofit = Retrofit.Builder()

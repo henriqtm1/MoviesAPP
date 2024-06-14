@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 
 class DecimalFormatRating {
 
-    companion object{
+    companion object {
         val mDecimalFormat = DecimalFormat("0.0")
     }
 }

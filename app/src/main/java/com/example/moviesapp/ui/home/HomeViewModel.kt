@@ -1,4 +1,3 @@
-
 package com.example.moviesapp.ui.home
 
 import androidx.lifecycle.*
@@ -20,7 +19,14 @@ class HomeViewModel(private val aMoviesRepository: MoviesRepository) : ViewModel
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    _moviesList.postValue(aMoviesRepository.repoGetMovies(aIncludeAdult, aIncludeVideo, aLanguage, aPage))
+                    _moviesList.postValue(
+                        aMoviesRepository.repoGetMovies(
+                            aIncludeAdult,
+                            aIncludeVideo,
+                            aLanguage,
+                            aPage
+                        )
+                    )
                 } catch (aException: Exception) {
                     _errorMessage.postValue(aException.message)
                 }

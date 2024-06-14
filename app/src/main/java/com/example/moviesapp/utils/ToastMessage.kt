@@ -5,7 +5,7 @@ import android.widget.Toast
 
 class ToastMessage {
 
-    companion object{
+    companion object {
         fun showToastMessage_SHORT(aContext: Context, aMessage: String) {
             Toast.makeText(aContext, aMessage, Toast.LENGTH_SHORT).show()
         }

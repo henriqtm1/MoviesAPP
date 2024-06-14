@@ -24,12 +24,17 @@ class DetailsFragment : Fragment() {
         val lRating = arguments?.getFloat("rating")
         val lDesc = arguments?.getString("desc")
 
-       setComponentesInScreen(lImage,lTitle,lRating,lDesc)
+        setComponentesInScreen(lImage, lTitle, lRating, lDesc)
         val lRoot = mBinding.root
         return lRoot
     }
 
-    private fun setComponentesInScreen(lImage: String?, lTitle: String?, lRating: Float?, lDesc: String?) {
+    private fun setComponentesInScreen(
+        lImage: String?,
+        lTitle: String?,
+        lRating: Float?,
+        lDesc: String?
+    ) {
         GlideImage.GlideImageTransform(mBinding.imgMovie.context, lImage!!, mBinding.imgMovie)
         mBinding.txtTitle.text = lTitle
         mBinding.txtMovieRating.text = DecimalFormatRating.mDecimalFormat.format(lRating)

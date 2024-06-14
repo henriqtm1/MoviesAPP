@@ -54,12 +54,14 @@ class MoviesRepositoryTest {
             total_results = 100
         )
 
-        `when`(mMoviesServices.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
-        )).thenReturn(lMockResponse)
+        `when`(
+            mMoviesServices.getMovies(
+                aIncludeAdult = false,
+                aIncludeVideo = false,
+                aLanguage = "en",
+                aPage = 1
+            )
+        ).thenReturn(lMockResponse)
 
         val lResult = mMoviesRepository.repoGetMovies(
             aIncludeAdult = false,

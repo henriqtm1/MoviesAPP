@@ -53,12 +53,14 @@ class HomeViewModelTest {
 
     @Test
     fun `vmGetMovies handles exception`() = runTest {
-        Mockito.`when`(mMoviesRepository.repoGetMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
-        ))
+        Mockito.`when`(
+            mMoviesRepository.repoGetMovies(
+                aIncludeAdult = false,
+                aIncludeVideo = false,
+                aLanguage = "en",
+                aPage = 1
+            )
+        )
             .thenThrow(RuntimeException("Test exception"))
 
         mHomeViewModel.vmGetMovies(
@@ -68,5 +70,5 @@ class HomeViewModelTest {
             aPage = 1
         )
 
-       }
+    }
 }

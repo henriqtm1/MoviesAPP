@@ -1,4 +1,3 @@
-
 package com.example.moviesapp
 
 import android.app.Application
@@ -14,17 +13,20 @@ class MainApp : Application() {
         lateinit var INSTANCE: MainApp
             private set
     }
+
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@MainApp)
-            modules(listOf(
-                viewModelModule,
-                apiModule,
-                repositoryModule,
-                RetrofitModule
-            ))
+            modules(
+                listOf(
+                    viewModelModule,
+                    apiModule,
+                    repositoryModule,
+                    RetrofitModule
+                )
+            )
 
         }
         INSTANCE = this
