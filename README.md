@@ -40,7 +40,6 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - Arquitetura MVVM
 - Testes unitários
 - Corountines
-- Clean Code
 - Retrofit
 - Glide
 - Lifecycle
