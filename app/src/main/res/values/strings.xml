@@ -8,10 +8,20 @@
 
     <!-- Home Fragment -->
     <string name="txt_movie_catalog">Films in theaters</string>
+    <string name="txt_empty_movies">No movies were found.</string>
+    <string name="txt_error_loading_movies">Unable to load movies.</string>
+    <string name="txt_error_loading_movies_no_connection">Check your internet connection and try again.</string>
+    <string name="txt_error_loading_movies_timeout">The request took too long. Try again in a moment.</string>
+    <string name="txt_error_loading_movies_unauthorized">The API credential is invalid or expired.</string>
+    <string name="txt_error_loading_movies_server">The movie service is unavailable right now.</string>
+    <string name="txt_try_again">Try again</string>
 
     <!-- Detail Fragment -->
     <string name="txt_name_movie_example">Movie name</string>
     <string name="txt_description">Description</string>
+    <string name="content_description_back">Go back</string>
+    <string name="content_description_movie_poster">Movie poster</string>
+    <string name="content_description_movie_poster_with_title">Poster for %1$s</string>
 
     <!-- Item Movie -->
     <string name="txt_name_movie" translatable="false">UP</string>

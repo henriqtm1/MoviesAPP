@@ -48,8 +48,8 @@ class MoviesServicesTest {
         val lMockResponse = MoviesBaseResponse(
             page = 1,
             results = listOf(),
-            total_pages = 1,
-            total_results = 1
+            totalPages = 1,
+            totalResults = 1
         )
         val lResponseJson = Gson().toJson(lMockResponse)
 
@@ -69,5 +69,11 @@ class MoviesServicesTest {
 
             assertEquals(lMockResponse, lResponse)
         }
+
+        val lRequest = mMockWebServer.takeRequest()
+        assertEquals(
+            "/3/discover/movie?sort_by=popularity.desc&include_adult=false&include_video=false&language=en&page=1",
+            lRequest.path
+        )
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- Glide ships an optional NotificationTarget class; this app does not post notifications. -->
+    <issue
+        id="NotificationPermission"
+        severity="ignore" />
+
+    <!-- Dependency freshness is handled deliberately outside the app quality lint pass. -->
+    <issue
+        id="AndroidGradlePluginVersion"
+        severity="ignore" />
+    <issue
+        id="GradleDependency"
+        severity="ignore" />
+    <issue
+        id="NewerVersionAvailable"
+        severity="ignore" />
+
+    <!-- AGP 9.2.1 targets the stable Android 16 SDK line used by this project. -->
+    <issue
+        id="OldTargetApi"
+        severity="ignore" />
+
+    <!-- The project intentionally keeps a custom SplashActivity for this portfolio version. -->
+    <issue
+        id="CustomSplashScreen"
+        severity="ignore" />
+
+    <!-- Generated launcher icon layers are preserved as exported by Android Studio. -->
+    <issue
+        id="IconDuplicates"
+        severity="ignore" />
+</lint>

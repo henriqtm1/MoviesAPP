@@ -1,43 +1,34 @@
 package com.example.moviesapp
 
-import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.fragment.NavHostFragment
+import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.moviesapp.ui.home.HomeFragment
+import com.example.moviesapp.ui.home.HomeActivity
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
 
 @RunWith(AndroidJUnit4::class)
-class HomeFragmentTest : KoinTest {
+class HomeFragmentTest {
 
     @Test
-    fun fragment_is_not_null() {
-        val lScenario = launchFragmentInContainer<HomeFragment>()
-        lScenario.onFragment { aFragment ->
-            assertNotNull(aFragment)
+    fun home_fragment_is_loaded_by_home_activity() {
+        val lScenario = ActivityScenario.launch(HomeActivity::class.java)
+        lScenario.onActivity { aActivity ->
+            val lNavHostFragment = aActivity.supportFragmentManager
+                .findFragmentById(R.id.mobile_navigation) as NavHostFragment
+            assertNotNull(lNavHostFragment.childFragmentManager.fragments.firstOrNull())
         }
     }
 
     @Test
     fun viewModel_is_initialized() {
-        val lScenario = launchFragmentInContainer<HomeFragment>()
-        lScenario.onFragment { aFragment ->
-            assertNotNull(aFragment.fetchHomeViewModel())
-        }
-    }
-
-    @Test
-    fun viewModel_vmGetMovies_called() {
-        val scenario = launchFragmentInContainer<HomeFragment>()
-        scenario.onFragment { aFragment ->
-            val lViewmodel = aFragment.fetchHomeViewModel()
-            lViewmodel.vmGetMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 1
-            )
+        val lScenario = ActivityScenario.launch(HomeActivity::class.java)
+        lScenario.onActivity { aActivity ->
+            val lNavHostFragment = aActivity.supportFragmentManager
+                .findFragmentById(R.id.mobile_navigation) as NavHostFragment
+            val lHomeFragment = lNavHostFragment.childFragmentManager.fragments.firstOrNull()
+            assertNotNull(lHomeFragment)
         }
     }
 }

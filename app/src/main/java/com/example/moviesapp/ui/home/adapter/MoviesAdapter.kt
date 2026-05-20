@@ -1,15 +1,18 @@
+package com.example.moviesapp.ui.home.adapter
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.api.models.movies.Result
+import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
+import com.example.moviesapp.model.Movie
 import com.example.moviesapp.utils.DecimalFormatRating
 import com.example.moviesapp.utils.GlideImage
 
 class MoviesAdapter(
-    private val mMovies: List<Result>,
-    private val mItemClickListener: (Result) -> Unit
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+    private val mItemClickListener: (Movie) -> Unit
+) : PagingDataAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback) {
 
     override fun onCreateViewHolder(aParent: ViewGroup, aViewType: Int): MovieViewHolder {
         val lBinding =
@@ -18,21 +21,25 @@ class MoviesAdapter(
     }
 
     override fun onBindViewHolder(aHolder: MovieViewHolder, aPosition: Int) {
-        aHolder.bind(mMovies[aPosition], mItemClickListener)
+        getItem(aPosition)?.let { aMovie ->
+            aHolder.bind(aMovie, mItemClickListener)
+        }
     }
-
-    override fun getItemCount(): Int = mMovies.size
 
     class MovieViewHolder(private val aBinding: ItemMovieBinding) :
         RecyclerView.ViewHolder(aBinding.root) {
 
-        fun bind(aMovie: Result, clickListener: (Result) -> Unit) {
+        fun bind(aMovie: Movie, clickListener: (Movie) -> Unit) {
             aBinding.txtMovieTitle.text = aMovie.title
             aBinding.txtMovieRating.text =
-                DecimalFormatRating.mDecimalFormat.format(aMovie.vote_average)
+                DecimalFormatRating.mDecimalFormat.format(aMovie.voteAverage)
+            aBinding.imgMovie.contentDescription = aBinding.imgMovie.context.getString(
+                R.string.content_description_movie_poster_with_title,
+                aMovie.title
+            )
             GlideImage.GlideImageTransform(
                 aBinding.imgMovie.context,
-                aMovie.poster_path,
+                aMovie.posterPath,
                 aBinding.imgMovie
             )
 

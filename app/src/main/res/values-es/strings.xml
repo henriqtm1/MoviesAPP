@@ -8,10 +8,20 @@
 
     <!-- Fragmento de inicio -->
     <string name="txt_movie_catalog">Películas en cines</string>
+    <string name="txt_empty_movies">No se encontraron películas.</string>
+    <string name="txt_error_loading_movies">No se pudieron cargar las películas.</string>
+    <string name="txt_error_loading_movies_no_connection">Comprueba tu conexión a internet e inténtalo de nuevo.</string>
+    <string name="txt_error_loading_movies_timeout">La solicitud tardó demasiado. Inténtalo de nuevo en un momento.</string>
+    <string name="txt_error_loading_movies_unauthorized">La credencial de la API no es válida o ha expirado.</string>
+    <string name="txt_error_loading_movies_server">El servicio de películas no está disponible en este momento.</string>
+    <string name="txt_try_again">Intentar de nuevo</string>
     <string name="txt_description">Descripción</string>
 
     <!-- Fragmento de detalle -->
     <string name="txt_name_movie_example">Nombre de la película</string>
     <string name="txt_empty_description">Esta película no tiene descripción.</string>
+    <string name="content_description_back">Volver</string>
+    <string name="content_description_movie_poster">Póster de la película</string>
+    <string name="content_description_movie_poster_with_title">Póster de %1$s</string>
 
 </resources>

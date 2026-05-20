@@ -8,9 +8,19 @@
 
     <!-- Home Fragment -->
     <string name="txt_movie_catalog">Filmes em cartaz</string>
+    <string name="txt_empty_movies">Nenhum filme encontrado.</string>
+    <string name="txt_error_loading_movies">Não foi possível carregar os filmes.</string>
+    <string name="txt_error_loading_movies_no_connection">Verifique sua conexão com a internet e tente novamente.</string>
+    <string name="txt_error_loading_movies_timeout">A requisição demorou demais. Tente novamente em instantes.</string>
+    <string name="txt_error_loading_movies_unauthorized">A credencial da API está inválida ou expirada.</string>
+    <string name="txt_error_loading_movies_server">O serviço de filmes está indisponível no momento.</string>
+    <string name="txt_try_again">Tentar novamente</string>
     <string name="txt_description">Descrição</string>
 
     <!-- Detail Fragment -->
     <string name="txt_name_movie_example">Nome filme</string>
     <string name="txt_empty_description">Este filme não possui descrição.</string>
+    <string name="content_description_back">Voltar</string>
+    <string name="content_description_movie_poster">Pôster do filme</string>
+    <string name="content_description_movie_poster_with_title">Pôster de %1$s</string>
 </resources>
