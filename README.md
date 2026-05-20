@@ -8,6 +8,7 @@ Aplicativo Android para consultar filmes em cartaz usando a API do TMDB. O proje
 - [Sobre](#sobre)
 - [Funcionalidades](#funcionalidades)
 - [Arquitetura](#arquitetura)
+- [Decisões Técnicas](#decisões-técnicas)
 - [Tecnologias](#tecnologias)
 - [Configuração Local](#configuração-local)
 - [Como Executar](#como-executar)
@@ -61,6 +62,15 @@ O fluxo principal da Home usa Paging 3:
 
 As respostas da API são convertidas para modelos internos (`Movie` e `MoviesPage`) antes de chegarem na UI. Isso evita acoplamento direto entre tela e DTOs da API.
 
+## Decisões Técnicas
+
+- **Hilt** foi usado para manter a injeção alinhada com o ecossistema Android atual, com módulos explícitos para rede e repository.
+- **Paging 3** substitui paginação manual, reduzindo estado duplicado na UI e centralizando retry/loading/erro no fluxo oficial da biblioteca.
+- **XML Views** foi mantido por coerência com o case original e para preservar o escopo do projeto, sem misturar uma migração visual para Compose.
+- **Sem modularização**: o app tem escopo pequeno. Separar em módulos adicionaria custo de build e complexidade sem ganho proporcional.
+- **DTOs separados dos modelos da UI**: a camada de repository traduz a resposta da API antes de expor os dados para a tela.
+- **Erros tipados**: falhas de timeout, falta de conexão, `401`, erro de servidor e erro desconhecido são mapeadas separadamente.
+
 ## Tecnologias
 
 - Kotlin
@@ -101,7 +111,7 @@ https://api.themoviedb.org
 
 ## Como Executar
 
-1. Instale o Android SDK 37.
+1. Instale o Android SDK 36.
 2. Configure `TMDB_ACCESS_TOKEN` em `local.properties`, variável de ambiente ou propriedade Gradle.
 3. Compile o app:
 

@@ -32,15 +32,15 @@ import org.mockito.junit.MockitoJUnitRunner
 class HomeViewModelTest {
 
     @Mock
-    private lateinit var mMoviesRepository: MoviesRepository
+    private lateinit var moviesRepository: MoviesRepository
 
-    private val mDispatcher = UnconfinedTestDispatcher()
-    private lateinit var mHomeViewModel: HomeViewModel
+    private val dispatcher = UnconfinedTestDispatcher()
+    private lateinit var homeViewModel: HomeViewModel
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mDispatcher)
-        mHomeViewModel = HomeViewModel(mMoviesRepository)
+        Dispatchers.setMain(dispatcher)
+        homeViewModel = HomeViewModel(moviesRepository)
     }
 
     @After
@@ -49,50 +49,50 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `vmGetMovies exposes paging data from repository`() = runTest {
-        val lExpectedMovies = listOf(createMovie(1), createMovie(2))
+    fun `loadMovies exposes paging data from repository`() = runTest {
+        val expectedMovies = listOf(createMovie(1), createMovie(2))
         `when`(
-            mMoviesRepository.getMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 1
+            moviesRepository.getMovies(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en",
+                page = 1
             )
-        ).thenReturn(ApiResult.Success(createMoviesPage(1, 1, lExpectedMovies)))
+        ).thenReturn(ApiResult.Success(createMoviesPage(1, 1, expectedMovies)))
 
-        mHomeViewModel.vmGetMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        homeViewModel.loadMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        val lDiffer = createDiffer()
-        val lCollectJob = launch {
-            mHomeViewModel.mMoviesPagingData.collectLatest { aPagingData ->
-                lDiffer.submitData(aPagingData)
+        val differ = createDiffer()
+        val collectJob = launch {
+            homeViewModel.moviesPagingData.collectLatest { pagingData ->
+                differ.submitData(pagingData)
             }
         }
 
         advanceUntilIdle()
 
-        assertEquals(lExpectedMovies, lDiffer.snapshot().items)
-        verify(mMoviesRepository).getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        assertEquals(expectedMovies, differ.snapshot().items)
+        verify(moviesRepository).getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        lCollectJob.cancel()
+        collectJob.cancel()
     }
 
     private fun createDiffer(): AsyncPagingDataDiffer<Movie> {
         return AsyncPagingDataDiffer(
             diffCallback = MovieDiffCallback,
             updateCallback = NoopListUpdateCallback,
-            mainDispatcher = mDispatcher,
-            workerDispatcher = mDispatcher
+            mainDispatcher = dispatcher,
+            workerDispatcher = dispatcher
         )
     }
 

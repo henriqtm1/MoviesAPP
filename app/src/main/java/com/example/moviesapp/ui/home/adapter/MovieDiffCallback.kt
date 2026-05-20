@@ -4,11 +4,11 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.moviesapp.model.Movie
 
 object MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(aOldItem: Movie, aNewItem: Movie): Boolean {
-        return aOldItem.id == aNewItem.id
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(aOldItem: Movie, aNewItem: Movie): Boolean {
-        return aOldItem == aNewItem
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
     }
 }

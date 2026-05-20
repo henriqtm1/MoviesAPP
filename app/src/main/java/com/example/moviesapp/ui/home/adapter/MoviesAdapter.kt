@@ -7,43 +7,37 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
 import com.example.moviesapp.model.Movie
-import com.example.moviesapp.utils.DecimalFormatRating
-import com.example.moviesapp.utils.GlideImage
+import com.example.moviesapp.utils.MoviePosterLoader
+import com.example.moviesapp.utils.RatingFormatter
 
 class MoviesAdapter(
-    private val mItemClickListener: (Movie) -> Unit
+    private val itemClickListener: (Movie) -> Unit
 ) : PagingDataAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback) {
 
-    override fun onCreateViewHolder(aParent: ViewGroup, aViewType: Int): MovieViewHolder {
-        val lBinding =
-            ItemMovieBinding.inflate(LayoutInflater.from(aParent.context), aParent, false)
-        return MovieViewHolder(lBinding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieViewHolder(binding)
     }
 
-    override fun onBindViewHolder(aHolder: MovieViewHolder, aPosition: Int) {
-        getItem(aPosition)?.let { aMovie ->
-            aHolder.bind(aMovie, mItemClickListener)
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        getItem(position)?.let { movie ->
+            holder.bind(movie, itemClickListener)
         }
     }
 
-    class MovieViewHolder(private val aBinding: ItemMovieBinding) :
-        RecyclerView.ViewHolder(aBinding.root) {
+    class MovieViewHolder(private val binding: ItemMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(aMovie: Movie, clickListener: (Movie) -> Unit) {
-            aBinding.txtMovieTitle.text = aMovie.title
-            aBinding.txtMovieRating.text =
-                DecimalFormatRating.mDecimalFormat.format(aMovie.voteAverage)
-            aBinding.imgMovie.contentDescription = aBinding.imgMovie.context.getString(
+        fun bind(movie: Movie, clickListener: (Movie) -> Unit) {
+            binding.txtMovieTitle.text = movie.title
+            binding.txtMovieRating.text = RatingFormatter.format(movie.voteAverage)
+            binding.imgMovie.contentDescription = binding.imgMovie.context.getString(
                 R.string.content_description_movie_poster_with_title,
-                aMovie.title
+                movie.title
             )
-            GlideImage.GlideImageTransform(
-                aBinding.imgMovie.context,
-                aMovie.posterPath,
-                aBinding.imgMovie
-            )
+            MoviePosterLoader.load(movie.posterPath, binding.imgMovie)
 
-            aBinding.root.setOnClickListener { clickListener(aMovie) }
+            binding.root.setOnClickListener { clickListener(movie) }
         }
     }
 }

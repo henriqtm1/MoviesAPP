@@ -38,8 +38,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCache(@ApplicationContext aContext: Context): Cache {
-        return Cache(aContext.cacheDir, CACHE_SIZE_BYTES)
+    fun provideCache(@ApplicationContext context: Context): Cache {
+        return Cache(context.cacheDir, CACHE_SIZE_BYTES)
     }
 
     @Provides
@@ -52,27 +52,27 @@ object NetworkModule {
     @Singleton
     fun provideInterceptor(): Interceptor {
         return Interceptor { chain ->
-            val lRequest = chain.request().newBuilder().apply {
-                val lAccessToken = BuildConfig.TMDB_ACCESS_TOKEN.trim()
-                if (lAccessToken.isNotEmpty()) {
-                    addHeader(AUTHORIZATION, lAccessToken.withBearerPrefix())
+            val request = chain.request().newBuilder().apply {
+                val accessToken = BuildConfig.TMDB_ACCESS_TOKEN.trim()
+                if (accessToken.isNotEmpty()) {
+                    addHeader(AUTHORIZATION, accessToken.withBearerPrefix())
                 }
                 addHeader(ACCEPT, CONTENT_TYPE_JSON)
             }.build()
-            chain.proceed(lRequest)
+            chain.proceed(request)
         }
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(aCache: Cache, aInterceptor: Interceptor): OkHttpClient {
+    fun provideOkHttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder().apply {
-            cache(aCache)
+            cache(cache)
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             retryOnConnectionFailure(true)
-            addInterceptor(aInterceptor)
+            addInterceptor(interceptor)
             if (BuildConfig.DEBUG) {
                 addInterceptor(HttpLoggingInterceptor().apply {
                     redactHeader(AUTHORIZATION)
@@ -93,18 +93,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(aClient: OkHttpClient, aGson: Gson): Retrofit {
+    fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_MOVIES)
-            .addConverterFactory(GsonConverterFactory.create(aGson))
-            .client(aClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(client)
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideMoviesServices(aRetrofit: Retrofit): MoviesServices {
-        return aRetrofit.create(MoviesServices::class.java)
+    fun provideMoviesServices(retrofit: Retrofit): MoviesServices {
+        return retrofit.create(MoviesServices::class.java)
     }
 }
 

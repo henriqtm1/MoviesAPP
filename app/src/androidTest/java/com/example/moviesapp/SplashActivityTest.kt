@@ -12,8 +12,8 @@ class SplashActivityTest {
 
     @Test
     fun activity_is_not_null() {
-        val lScenario = ActivityScenario.launch(SplashActivity::class.java)
-        lScenario.onActivity { activity ->
+        val scenario = ActivityScenario.launch(SplashActivity::class.java)
+        scenario.onActivity { activity ->
             assertNotNull(activity)
         }
     }

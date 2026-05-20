@@ -9,20 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.databinding.ItemMoviesLoadStateBinding
 
 class MoviesLoadStateAdapter(
-    private val mRetry: () -> Unit,
-    private val mErrorMessage: (Throwable) -> String
+    private val retry: () -> Unit,
+    private val errorMessage: (Throwable) -> String
 ) : LoadStateAdapter<MoviesLoadStateAdapter.MovieLoadStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
     ): MovieLoadStateViewHolder {
-        val lBinding = ItemMoviesLoadStateBinding.inflate(
+        val binding = ItemMoviesLoadStateBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return MovieLoadStateViewHolder(lBinding, mRetry, mErrorMessage)
+        return MovieLoadStateViewHolder(binding, retry, errorMessage)
     }
 
     override fun onBindViewHolder(holder: MovieLoadStateViewHolder, loadState: LoadState) {
@@ -30,33 +30,33 @@ class MoviesLoadStateAdapter(
     }
 
     class MovieLoadStateViewHolder(
-        private val aBinding: ItemMoviesLoadStateBinding,
-        private val aRetry: () -> Unit,
-        private val aErrorMessage: (Throwable) -> String
-    ) : RecyclerView.ViewHolder(aBinding.root) {
+        private val binding: ItemMoviesLoadStateBinding,
+        private val retry: () -> Unit,
+        private val errorMessage: (Throwable) -> String
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            aBinding.txtLoadStateRetry.setOnClickListener { aRetry() }
+            binding.txtLoadStateRetry.setOnClickListener { retry() }
         }
 
-        fun bind(aLoadState: LoadState) {
-            val lError = aLoadState as? LoadState.Error
-            aBinding.progressLoadState.visibility = if (aLoadState is LoadState.Loading) {
+        fun bind(loadState: LoadState) {
+            val error = loadState as? LoadState.Error
+            binding.progressLoadState.visibility = if (loadState is LoadState.Loading) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
-            aBinding.txtLoadStateMessage.visibility = if (lError != null) {
+            binding.txtLoadStateMessage.visibility = if (error != null) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
-            aBinding.txtLoadStateRetry.visibility = if (lError != null) {
+            binding.txtLoadStateRetry.visibility = if (error != null) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
-            aBinding.txtLoadStateMessage.text = lError?.let { aErrorMessage(it.error) }
+            binding.txtLoadStateMessage.text = error?.let { errorMessage(it.error) }
         }
     }
 }

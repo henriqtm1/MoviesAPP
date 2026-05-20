@@ -7,22 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.moviesapp.databinding.ActivityMainBinding
 import com.example.moviesapp.ui.home.HomeActivity
 
-
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setListeners()
     }
 
     private fun setListeners() {
-        mBinding.txtVerifyMovies.setOnClickListener {
+        binding.txtVerifyMovies.setOnClickListener {
             startActivity(
                 Intent(
                     this,

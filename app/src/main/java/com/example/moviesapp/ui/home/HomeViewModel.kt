@@ -24,15 +24,15 @@ private const val PREFETCH_DISTANCE = 4
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val aMoviesRepository: MoviesRepository
+    private val moviesRepository: MoviesRepository
 ) : ViewModel() {
 
-    private val mMovieQuery = MutableStateFlow<MovieQuery?>(null)
+    private val movieQuery = MutableStateFlow<MovieQuery?>(null)
 
-    val mMoviesPagingData: Flow<PagingData<Movie>> = mMovieQuery
+    val moviesPagingData: Flow<PagingData<Movie>> = movieQuery
         .filterNotNull()
         .distinctUntilChanged()
-        .flatMapLatest { aQuery ->
+        .flatMapLatest { query ->
             Pager(
                 config = PagingConfig(
                     pageSize = MOVIES_PAGE_SIZE,
@@ -42,23 +42,23 @@ class HomeViewModel @Inject constructor(
                 ),
                 pagingSourceFactory = {
                     MoviesPagingSource(
-                        aMoviesRepository = aMoviesRepository,
-                        aIncludeAdult = aQuery.includeAdult,
-                        aIncludeVideo = aQuery.includeVideo,
-                        aLanguage = aQuery.language,
-                        aInitialPage = aQuery.initialPage
+                        moviesRepository = moviesRepository,
+                        includeAdult = query.includeAdult,
+                        includeVideo = query.includeVideo,
+                        language = query.language,
+                        initialPage = query.initialPage
                     )
                 }
             ).flow
         }
         .cachedIn(viewModelScope)
 
-    fun vmGetMovies(aIncludeAdult: Boolean, aIncludeVideo: Boolean, aLanguage: String, aPage: Int) {
-        mMovieQuery.value = MovieQuery(
-            includeAdult = aIncludeAdult,
-            includeVideo = aIncludeVideo,
-            language = aLanguage,
-            initialPage = aPage
+    fun loadMovies(includeAdult: Boolean, includeVideo: Boolean, language: String, page: Int) {
+        movieQuery.value = MovieQuery(
+            includeAdult = includeAdult,
+            includeVideo = includeVideo,
+            language = language,
+            initialPage = page
         )
     }
 }

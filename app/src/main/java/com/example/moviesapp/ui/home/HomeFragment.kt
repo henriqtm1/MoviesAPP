@@ -29,42 +29,41 @@ class HomeFragment : Fragment() {
         private const val FIRST_PAGE = 1
     }
 
-    private val mHomeViewModel: HomeViewModel by viewModels()
-    private val mMoviesAdapter = MoviesAdapter { aMovie -> onMovieClicked(aMovie) }
+    private val homeViewModel: HomeViewModel by viewModels()
+    private val moviesAdapter = MoviesAdapter { movie -> onMovieClicked(movie) }
     private var _binding: FragmentHomeBinding? = null
-    private val mBinding get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        aInflater: LayoutInflater,
-        aContainer: ViewGroup?,
-        aSavedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(aInflater, aContainer, false)
-        val lRoot = mBinding.root
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         setupRecyclerView()
         setupPagingCollectors()
-        getMoviesApi()
+        loadMovies()
         setListeners()
-        return lRoot
+        return binding.root
     }
 
-    private fun getMoviesApi() {
-        mHomeViewModel.vmGetMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = Locale.getDefault().language,
-            aPage = FIRST_PAGE
+    private fun loadMovies() {
+        homeViewModel.loadMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = Locale.getDefault().language,
+            page = FIRST_PAGE
         )
     }
 
     private fun setupRecyclerView() {
-        mBinding.recyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = mMoviesAdapter.withLoadStateFooter(
+            adapter = moviesAdapter.withLoadStateFooter(
                 footer = MoviesLoadStateAdapter(
-                    mRetry = { mMoviesAdapter.retry() },
-                    mErrorMessage = { aThrowable ->
-                        getString(aThrowable.toHomeErrorMessageRes())
+                    retry = { moviesAdapter.retry() },
+                    errorMessage = { throwable ->
+                        getString(throwable.toHomeErrorMessageRes())
                     }
                 )
             )
@@ -75,74 +74,74 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    mHomeViewModel.mMoviesPagingData.collectLatest { aPagingData ->
-                        mMoviesAdapter.submitData(aPagingData)
+                    homeViewModel.moviesPagingData.collectLatest { pagingData ->
+                        moviesAdapter.submitData(pagingData)
                     }
                 }
                 launch {
-                    mMoviesAdapter.loadStateFlow.collectLatest { aLoadStates ->
-                        renderLoadState(aLoadStates)
+                    moviesAdapter.loadStateFlow.collectLatest { loadStates ->
+                        renderLoadState(loadStates)
                     }
                 }
             }
         }
     }
 
-    private fun renderLoadState(aLoadStates: CombinedLoadStates) {
-        val lRefreshState = aLoadStates.refresh
-        val lIsListEmpty = lRefreshState is LoadState.NotLoading && mMoviesAdapter.itemCount == 0
+    private fun renderLoadState(loadStates: CombinedLoadStates) {
+        val refreshState = loadStates.refresh
+        val isListEmpty = refreshState is LoadState.NotLoading && moviesAdapter.itemCount == 0
 
         when {
-            lRefreshState is LoadState.Loading -> showLoading()
-            lRefreshState is LoadState.Error -> showStateMessage(
-                aMessage = getString(lRefreshState.error.toHomeErrorMessageRes()),
-                aCanRetry = true
+            refreshState is LoadState.Loading -> showLoading()
+            refreshState is LoadState.Error -> showStateMessage(
+                message = getString(refreshState.error.toHomeErrorMessageRes()),
+                canRetry = true
             )
-            lIsListEmpty -> showStateMessage(
-                aMessage = getString(R.string.txt_empty_movies),
-                aCanRetry = false
+            isListEmpty -> showStateMessage(
+                message = getString(R.string.txt_empty_movies),
+                canRetry = false
             )
             else -> showMovies()
         }
     }
 
     private fun showLoading() {
-        mBinding.progressMovies.visibility = View.VISIBLE
-        mBinding.recyclerView.visibility = View.GONE
-        mBinding.txtStateMessage.visibility = View.GONE
-        mBinding.txtRetry.visibility = View.GONE
+        binding.progressMovies.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        binding.txtStateMessage.visibility = View.GONE
+        binding.txtRetry.visibility = View.GONE
     }
 
     private fun showMovies() {
-        mBinding.progressMovies.visibility = View.GONE
-        mBinding.recyclerView.visibility = View.VISIBLE
-        mBinding.txtStateMessage.visibility = View.GONE
-        mBinding.txtRetry.visibility = View.GONE
+        binding.progressMovies.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.txtStateMessage.visibility = View.GONE
+        binding.txtRetry.visibility = View.GONE
     }
 
-    private fun showStateMessage(aMessage: String, aCanRetry: Boolean) {
-        mBinding.progressMovies.visibility = View.GONE
-        mBinding.recyclerView.visibility = View.GONE
-        mBinding.txtStateMessage.text = aMessage
-        mBinding.txtStateMessage.visibility = View.VISIBLE
-        mBinding.txtRetry.visibility = if (aCanRetry) View.VISIBLE else View.GONE
+    private fun showStateMessage(message: String, canRetry: Boolean) {
+        binding.progressMovies.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
+        binding.txtStateMessage.text = message
+        binding.txtStateMessage.visibility = View.VISIBLE
+        binding.txtRetry.visibility = if (canRetry) View.VISIBLE else View.GONE
     }
 
     private fun onMovieClicked(movie: Movie) {
-        val lOverview = movie.overview.ifBlank { getString(R.string.txt_empty_description) }
+        val overview = movie.overview.ifBlank { getString(R.string.txt_empty_description) }
 
-        val lAction = HomeFragmentDirections.actionNavHomeToNavDetails(
+        val action = HomeFragmentDirections.actionNavHomeToNavDetails(
             movie.posterPath,
             movie.title,
             movie.voteAverage.toFloat(),
-            lOverview
+            overview
         )
-        findNavController().navigate(lAction)
+        findNavController().navigate(action)
     }
 
     private fun setListeners() {
-        mBinding.imgBack.setOnClickListener { activity?.finish() }
-        mBinding.txtRetry.setOnClickListener { mMoviesAdapter.retry() }
+        binding.imgBack.setOnClickListener { activity?.finish() }
+        binding.txtRetry.setOnClickListener { moviesAdapter.retry() }
     }
 
     override fun onDestroyView() {
@@ -150,7 +149,4 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    fun fetchHomeViewModel(): HomeViewModel {
-        return mHomeViewModel
-    }
 }

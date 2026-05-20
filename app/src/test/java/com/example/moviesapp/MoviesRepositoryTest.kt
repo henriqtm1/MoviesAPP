@@ -32,17 +32,17 @@ import kotlin.test.assertIs
 class MoviesRepositoryTest {
 
     @Mock
-    private lateinit var mMoviesServices: MoviesServices
-    private lateinit var mMoviesRepository: MoviesRepository
+    private lateinit var moviesServices: MoviesServices
+    private lateinit var moviesRepository: MoviesRepository
 
     @Before
     fun setUp() {
-        mMoviesRepository = MoviesRepositoryImpl(mMoviesServices)
+        moviesRepository = MoviesRepositoryImpl(moviesServices)
     }
 
     @Test
     fun `getMovies returns mapped page when service succeeds`() = runTest {
-        val lMockResponse = MoviesBaseResponse(
+        val mockResponse = MoviesBaseResponse(
             page = 2,
             results = listOf(createResult()),
             totalPages = 10,
@@ -50,26 +50,26 @@ class MoviesRepositoryTest {
         )
 
         `when`(
-            mMoviesServices.getMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 2
+            moviesServices.getMovies(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en",
+                page = 2
             )
-        ).thenReturn(lMockResponse)
+        ).thenReturn(mockResponse)
 
-        val lResult = mMoviesRepository.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 2
+        val result = moviesRepository.getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 2
         )
 
-        verify(mMoviesServices).getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 2
+        verify(moviesServices).getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 2
         )
 
         assertEquals(
@@ -88,92 +88,92 @@ class MoviesRepositoryTest {
                     )
                 )
             ),
-            lResult
+            result
         )
     }
 
     @Test
     fun `getMovies returns error when service fails`() = runTest {
         `when`(
-            mMoviesServices.getMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 1
+            moviesServices.getMovies(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en",
+                page = 1
             )
         ).thenThrow(RuntimeException("Test exception"))
 
-        val lResult = mMoviesRepository.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        val result = moviesRepository.getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        val lError = assertIs<ApiResult.Error>(lResult)
-        assertEquals(ApiErrorType.UNKNOWN, lError.type)
-        assertEquals("Test exception", lError.message)
+        val error = assertIs<ApiResult.Error>(result)
+        assertEquals(ApiErrorType.UNKNOWN, error.type)
+        assertEquals("Test exception", error.message)
     }
 
     @Test
     fun `getMovies returns unauthorized error when service returns 401`() = runTest {
         stubServiceFailure(createHttpException(401))
 
-        val lResult = mMoviesRepository.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        val result = moviesRepository.getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        val lError = assertIs<ApiResult.Error>(lResult)
-        assertEquals(ApiErrorType.UNAUTHORIZED, lError.type)
+        val error = assertIs<ApiResult.Error>(result)
+        assertEquals(ApiErrorType.UNAUTHORIZED, error.type)
     }
 
     @Test
     fun `getMovies returns timeout error when request times out`() = runTest {
         stubServiceFailure(SocketTimeoutException("timeout"))
 
-        val lResult = mMoviesRepository.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        val result = moviesRepository.getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        val lError = assertIs<ApiResult.Error>(lResult)
-        assertEquals(ApiErrorType.TIMEOUT, lError.type)
+        val error = assertIs<ApiResult.Error>(result)
+        assertEquals(ApiErrorType.TIMEOUT, error.type)
     }
 
     @Test
     fun `getMovies returns no connection error when host cannot be resolved`() = runTest {
         stubServiceFailure(UnknownHostException("no internet"))
 
-        val lResult = mMoviesRepository.getMovies(
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en",
-            aPage = 1
+        val result = moviesRepository.getMovies(
+            includeAdult = false,
+            includeVideo = false,
+            language = "en",
+            page = 1
         )
 
-        val lError = assertIs<ApiResult.Error>(lResult)
-        assertEquals(ApiErrorType.NO_CONNECTION, lError.type)
+        val error = assertIs<ApiResult.Error>(result)
+        assertEquals(ApiErrorType.NO_CONNECTION, error.type)
     }
 
-    private suspend fun stubServiceFailure(aException: Exception) {
+    private suspend fun stubServiceFailure(exception: Exception) {
         `when`(
-            mMoviesServices.getMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 1
+            moviesServices.getMovies(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en",
+                page = 1
             )
-        ).thenAnswer { throw aException }
+        ).thenAnswer { throw exception }
     }
 
-    private fun createHttpException(aStatusCode: Int): HttpException {
-        val lErrorBody = "{}".toResponseBody("application/json".toMediaType())
-        return HttpException(Response.error<MoviesBaseResponse>(aStatusCode, lErrorBody))
+    private fun createHttpException(statusCode: Int): HttpException {
+        val errorBody = "{}".toResponseBody("application/json".toMediaType())
+        return HttpException(Response.error<MoviesBaseResponse>(statusCode, errorBody))
     }
 
     private fun createResult(): Result {

@@ -9,40 +9,39 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentDetailsBinding
-import com.example.moviesapp.utils.DecimalFormatRating
-import com.example.moviesapp.utils.GlideImage
+import com.example.moviesapp.utils.MoviePosterLoader
+import com.example.moviesapp.utils.RatingFormatter
 
 class DetailsFragment : Fragment() {
-    private val mArgs: DetailsFragmentArgs by navArgs()
+    private val args: DetailsFragmentArgs by navArgs()
     private var _binding: FragmentDetailsBinding? = null
-    private val mBinding get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        aInflater: LayoutInflater,
-        aContainer: ViewGroup?,
-        aSavedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailsBinding.inflate(aInflater, aContainer, false)
-        setComponentesInScreen(mArgs.image, mArgs.title, mArgs.rating, mArgs.desc)
-        val lRoot = mBinding.root
-        return lRoot
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        bindMovieDetails(args.image, args.title, args.rating, args.desc)
+        return binding.root
     }
 
-    private fun setComponentesInScreen(
-        lImage: String,
-        lTitle: String,
-        lRating: Float,
-        lDesc: String
+    private fun bindMovieDetails(
+        image: String,
+        title: String,
+        rating: Float,
+        description: String
     ) {
-        mBinding.imgMovie.contentDescription = getString(
+        binding.imgMovie.contentDescription = getString(
             R.string.content_description_movie_poster_with_title,
-            lTitle
+            title
         )
-        GlideImage.GlideImageTransform(mBinding.imgMovie.context, lImage, mBinding.imgMovie)
-        mBinding.txtTitle.text = lTitle
-        mBinding.txtMovieRating.text = DecimalFormatRating.mDecimalFormat.format(lRating)
-        mBinding.txtDescription.text = lDesc
-        mBinding.imgBack.setOnClickListener { findNavController().popBackStack() }
+        MoviePosterLoader.load(image, binding.imgMovie)
+        binding.txtTitle.text = title
+        binding.txtMovieRating.text = RatingFormatter.format(rating)
+        binding.txtDescription.text = description
+        binding.imgBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     override fun onDestroyView() {

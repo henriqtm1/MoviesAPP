@@ -22,40 +22,40 @@ private const val SERVER_ERROR_MESSAGE = "The server is unavailable."
 
 interface MoviesRepository {
     suspend fun getMovies(
-        aIncludeAdult: Boolean,
-        aIncludeVideo: Boolean,
-        aLanguage: String,
-        aPage: Int
+        includeAdult: Boolean,
+        includeVideo: Boolean,
+        language: String,
+        page: Int
     ): ApiResult<MoviesPage>
 }
 
 class MoviesRepositoryImpl @Inject constructor(
-    private val aMoviesServices: MoviesServices
+    private val moviesServices: MoviesServices
 ) : MoviesRepository {
     override suspend fun getMovies(
-        aIncludeAdult: Boolean,
-        aIncludeVideo: Boolean,
-        aLanguage: String,
-        aPage: Int
+        includeAdult: Boolean,
+        includeVideo: Boolean,
+        language: String,
+        page: Int
     ): ApiResult<MoviesPage> {
         return try {
-            val lResponse = aMoviesServices.getMovies(
-                aIncludeAdult = aIncludeAdult,
-                aIncludeVideo = aIncludeVideo,
-                aLanguage = aLanguage,
-                aPage = aPage
+            val response = moviesServices.getMovies(
+                includeAdult = includeAdult,
+                includeVideo = includeVideo,
+                language = language,
+                page = page
             )
             ApiResult.Success(
                 MoviesPage(
-                    page = lResponse.page,
-                    totalPages = lResponse.totalPages,
-                    movies = lResponse.results.map { it.toMovie() }
+                    page = response.page,
+                    totalPages = response.totalPages,
+                    movies = response.results.map { it.toMovie() }
                 )
             )
-        } catch (aCancellationException: CancellationException) {
-            throw aCancellationException
-        } catch (aException: Exception) {
-            aException.toApiError()
+        } catch (cancellationException: CancellationException) {
+            throw cancellationException
+        } catch (exception: Exception) {
+            exception.toApiError()
         }
     }
 }

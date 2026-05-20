@@ -17,63 +17,63 @@ import kotlin.test.assertEquals
 
 class MoviesServicesTest {
 
-    private lateinit var mMockWebServer: MockWebServer
-    private lateinit var mMoviesServices: MoviesServices
+    private lateinit var mockWebServer: MockWebServer
+    private lateinit var moviesServices: MoviesServices
 
     @Before
     fun setUp() {
-        mMockWebServer = MockWebServer()
-        mMockWebServer.start()
+        mockWebServer = MockWebServer()
+        mockWebServer.start()
 
-        val lLogging =
+        val logging =
             HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
-        val lClient = OkHttpClient.Builder().addInterceptor(lLogging).build()
+        val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
-        val lRetrofit = Retrofit.Builder()
-            .baseUrl(mMockWebServer.url("/"))
-            .client(lClient)
+        val retrofit = Retrofit.Builder()
+            .baseUrl(mockWebServer.url("/"))
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        mMoviesServices = lRetrofit.create(MoviesServices::class.java)
+        moviesServices = retrofit.create(MoviesServices::class.java)
     }
 
     @After
     fun tearDown() {
-        mMockWebServer.shutdown()
+        mockWebServer.shutdown()
     }
 
     @Test
     fun `getMovies returns expected data`() {
-        val lMockResponse = MoviesBaseResponse(
+        val mockResponse = MoviesBaseResponse(
             page = 1,
             results = listOf(),
             totalPages = 1,
             totalResults = 1
         )
-        val lResponseJson = Gson().toJson(lMockResponse)
+        val responseJson = Gson().toJson(mockResponse)
 
-        mMockWebServer.enqueue(
+        mockWebServer.enqueue(
             MockResponse()
-                .setBody(lResponseJson)
+                .setBody(responseJson)
                 .addHeader("Content-Type", "application/json")
         )
 
         runBlocking {
-            val lResponse = mMoviesServices.getMovies(
-                aIncludeAdult = false,
-                aIncludeVideo = false,
-                aLanguage = "en",
-                aPage = 1
+            val response = moviesServices.getMovies(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en",
+                page = 1
             )
 
-            assertEquals(lMockResponse, lResponse)
+            assertEquals(mockResponse, response)
         }
 
-        val lRequest = mMockWebServer.takeRequest()
+        val request = mockWebServer.takeRequest()
         assertEquals(
             "/3/discover/movie?sort_by=popularity.desc&include_adult=false&include_video=false&language=en&page=1",
-            lRequest.path
+            request.path
         )
     }
 }

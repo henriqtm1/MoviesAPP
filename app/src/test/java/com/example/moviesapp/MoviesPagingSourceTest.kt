@@ -25,72 +25,72 @@ import kotlin.test.assertIs
 class MoviesPagingSourceTest {
 
     @Mock
-    private lateinit var mMoviesRepository: MoviesRepository
+    private lateinit var moviesRepository: MoviesRepository
 
-    private lateinit var mPagingSource: MoviesPagingSource
+    private lateinit var pagingSource: MoviesPagingSource
 
     @Before
     fun setUp() {
-        mPagingSource = MoviesPagingSource(
-            aMoviesRepository = mMoviesRepository,
-            aIncludeAdult = false,
-            aIncludeVideo = false,
-            aLanguage = "en"
+        pagingSource = MoviesPagingSource(
+            moviesRepository = moviesRepository,
+            includeAdult = false,
+            includeVideo = false,
+            language = "en"
         )
     }
 
     @Test
     fun `load returns first page with next key`() = runTest {
-        val lMovies = listOf(createMovie(1))
+        val movies = listOf(createMovie(1))
         `when`(
-            mMoviesRepository.getMovies(false, false, "en", 1)
-        ).thenReturn(ApiResult.Success(createMoviesPage(1, 2, lMovies)))
+            moviesRepository.getMovies(false, false, "en", 1)
+        ).thenReturn(ApiResult.Success(createMoviesPage(1, 2, movies)))
 
-        val lResult = mPagingSource.load(createRefreshParams())
+        val result = pagingSource.load(createRefreshParams())
 
         assertEquals(
             PagingSource.LoadResult.Page(
-                data = lMovies,
+                data = movies,
                 prevKey = null,
                 nextKey = 2
             ),
-            lResult
+            result
         )
-        verify(mMoviesRepository).getMovies(false, false, "en", 1)
+        verify(moviesRepository).getMovies(false, false, "en", 1)
     }
 
     @Test
     fun `load returns last page without next key`() = runTest {
-        val lMovies = listOf(createMovie(2))
+        val movies = listOf(createMovie(2))
         `when`(
-            mMoviesRepository.getMovies(false, false, "en", 2)
-        ).thenReturn(ApiResult.Success(createMoviesPage(2, 2, lMovies)))
+            moviesRepository.getMovies(false, false, "en", 2)
+        ).thenReturn(ApiResult.Success(createMoviesPage(2, 2, movies)))
 
-        val lResult = mPagingSource.load(createAppendParams(key = 2))
+        val result = pagingSource.load(createAppendParams(key = 2))
 
         assertEquals(
             PagingSource.LoadResult.Page(
-                data = lMovies,
+                data = movies,
                 prevKey = 1,
                 nextKey = null
             ),
-            lResult
+            result
         )
-        verify(mMoviesRepository).getMovies(false, false, "en", 2)
+        verify(moviesRepository).getMovies(false, false, "en", 2)
     }
 
     @Test
     fun `load returns typed exception when repository fails`() = runTest {
         `when`(
-            mMoviesRepository.getMovies(false, false, "en", 1)
+            moviesRepository.getMovies(false, false, "en", 1)
         ).thenReturn(ApiResult.Error(ApiErrorType.NO_CONNECTION, "No internet"))
 
-        val lResult = mPagingSource.load(createRefreshParams())
+        val result = pagingSource.load(createRefreshParams())
 
-        val lError = assertIs<PagingSource.LoadResult.Error<Int, Movie>>(lResult)
-        val lException = assertIs<MoviesPagingException>(lError.throwable)
-        assertEquals(ApiErrorType.NO_CONNECTION, lException.type)
-        assertEquals("No internet", lException.message)
+        val error = assertIs<PagingSource.LoadResult.Error<Int, Movie>>(result)
+        val exception = assertIs<MoviesPagingException>(error.throwable)
+        assertEquals(ApiErrorType.NO_CONNECTION, exception.type)
+        assertEquals("No internet", exception.message)
     }
 
     private fun createRefreshParams(): PagingSource.LoadParams.Refresh<Int> {

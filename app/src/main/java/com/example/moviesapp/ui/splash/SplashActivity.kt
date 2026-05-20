@@ -10,15 +10,17 @@ import com.example.moviesapp.databinding.ActivitySplashBinding
 import com.example.moviesapp.ui.start.MainActivity
 
 class SplashActivity : AppCompatActivity() {
+    private companion object {
+        private const val SPLASH_DISPLAY_LENGTH = 2000L
+    }
 
-    private lateinit var mBinding: ActivitySplashBinding
-    private val SPLASH_DISPLAY_LENGTH = 2000L
+    private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        mBinding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         delaySplash()
     }
 
